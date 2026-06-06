@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Luggage Plugin Manifest",
+  "type": "object",
+  "required": ["id", "name", "version", "main"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the plugin."
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name of the plugin."
+    },
+    "version": {
+      "type": "string",
+      "description": "Version of the plugin (e.g., 1.0.0)."
+    },
+    "description": {
+      "type": "string",
+      "description": "A short description of what the plugin does."
+    },
+    "author": {
+      "type": "string",
+      "description": "The author of the plugin."
+    },
+    "main": {
+      "type": "string",
+      "description": "The main JavaScript file for the plugin logic.",
+      "default": "index.js"
+    },
+    "panel": {
+      "type": "object",
+      "description": "Panel configuration for the plugin UI.",
+      "properties": {
+        "html": {
+          "type": "string",
+          "description": "Path to the HTML file for the panel markup."
+        },
+        "css": {
+          "type": "string",
+          "description": "Path to the CSS file for the panel styles."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title displayed in the panel's titlebar."
+        }
+      },
+      "required": ["html", "css", "title"]
+    },
+    "minClientVersion": {
+      "type": "string",
+      "description": "Minimum Luggage version required for this plugin."
+    },
+    "permissions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of permissions requested by the plugin."
+    },
+    "builtin": {
+      "type": "boolean",
+      "description": "Whether the plugin is built into the client."
+    },
+    "load_order": {
+      "type": "integer",
+      "description": "The order in which the plugin should be loaded."
+    }
+  }
+}

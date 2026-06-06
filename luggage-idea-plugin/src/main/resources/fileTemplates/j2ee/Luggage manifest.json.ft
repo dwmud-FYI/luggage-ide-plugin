@@ -1,0 +1,14 @@
+{
+  "id": "${PLUGIN_ID}",
+  "name": "${PLUGIN_NAME}",
+  "version": "1.0.0",
+  "description": "",
+  "author": "${AUTHOR}",
+  "main": "index.js",
+  "panel": {
+    "html": "panel.html",
+    "css": "panel.css",
+    "title": "${PLUGIN_NAME}"
+  },
+  "minClientVersion": "1.10.2"
+}

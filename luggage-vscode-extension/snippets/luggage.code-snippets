@@ -1,0 +1,93 @@
+{
+    "Luggage: send command": {
+        "prefix": "lsend",
+        "scope": "javascript",
+        "body": ["client.send('${1:look}');$0"],
+        "description": "Send a command to the MUD"
+    },
+    "Luggage: subscribe to event": {
+        "prefix": "lon",
+        "scope": "javascript",
+        "body": [
+            "client.on('${1|line,gmcp|}', function (ev) {",
+            "    $0",
+            "});"
+        ],
+        "description": "Subscribe to a Luggage event"
+    },
+    "Luggage: register trigger": {
+        "prefix": "ltrigger",
+        "scope": "javascript",
+        "body": [
+            "client.triggers.create({",
+            "    pattern: ${1:/^You see/},",
+            "    action: function (text) {",
+            "        $0",
+            "    }",
+            "});"
+        ],
+        "description": "Register a trigger"
+    },
+    "Luggage: register timer": {
+        "prefix": "ltimer",
+        "scope": "javascript",
+        "body": [
+            "client.timers.create({",
+            "    interval: ${1:1000},",
+            "    repeat: true,",
+            "    action: function () {",
+            "        $0",
+            "    }",
+            "});"
+        ],
+        "description": "Register a timer"
+    },
+    "Luggage: storage get": {
+        "prefix": "lstorage",
+        "scope": "javascript",
+        "body": [
+            "client.storage.get('${1:config}').then(function (val) {",
+            "    $0",
+            "});"
+        ],
+        "description": "Read a value from plugin storage"
+    },
+    "Luggage: capture state machine": {
+        "prefix": "lcapture",
+        "scope": "javascript",
+        "body": [
+            "// One-shot output capture — gag a command's reply and collect it.",
+            "var capture = null;",
+            "",
+            "client.intercept.incoming(function (ev) {",
+            "    if (!capture) return ev;",
+            "    var raw = typeof ev === 'string' ? ev : (ev.text || ev.data || '');",
+            "    var line = raw.replace(/\\x1b\\[[0-9;]*m/g, '').replace(/\\\\s+$/, '');",
+            "    if (line.trim() === '>' && capture.lines.length) { finish(); return ev; }",
+            "    capture.lines.push(line);",
+            "    if (capture.idle) clearTimeout(capture.idle);",
+            "    capture.idle = setTimeout(finish, 1200);",
+            "    return null;",
+            "});",
+            "",
+            "function finish() {",
+            "    if (!capture) return;",
+            "    if (capture.idle) clearTimeout(capture.idle);",
+            "    if (capture.safety) clearTimeout(capture.safety);",
+            "    var resolve = capture.resolve;",
+            "    var text = capture.lines.join('\\\\n');",
+            "    capture = null;",
+            "    resolve(text);",
+            "}",
+            "",
+            "function captureCommand(cmd) {",
+            "    return new Promise(function (resolve) {",
+            "        capture = { lines: [], resolve: resolve, idle: null, safety: setTimeout(finish, 8000) };",
+            "        client.sendSilent(cmd);",
+            "    });",
+            "}",
+            "$0"
+        ],
+        "description": "Capture-state-machine boilerplate"
+    }
+}

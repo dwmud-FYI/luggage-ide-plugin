@@ -1,0 +1,54 @@
+<idea-plugin>
+    <id>com.luggage.plugindev</id>
+    <name>Luggage Plugin Development</name>
+    <vendor email="sean@luggage.dev" url="https://luggage.dev">Luggage</vendor>
+
+    <description><![CDATA[
+        <p>Zero-config developer tooling for <a href="https://luggage.dev">Luggage</a> MUD client plugin authors.</p>
+        <p>Open any Luggage plugin folder and you immediately get:</p>
+        <ul>
+          <li><b>manifest.json</b> validation + autocomplete (JSON Schema)</li>
+          <li><b>client.*</b> autocomplete inside <code>index.js</code> (bundled <code>luggage.d.ts</code>)</li>
+          <li><b>File → New → Luggage Plugin</b> — scaffolds <code>manifest.json</code>, <code>panel.html</code>, <code>panel.css</code>, <code>index.js</code></li>
+          <li>Live templates: <code>lsend</code>, <code>lon</code>, <code>lcapture</code>, <code>ltrigger</code>, <code>ltimer</code>, <code>lstorage</code></li>
+        </ul>
+        <p>Detection is shape-based — the plugin activates only inside folders that contain a Luggage <code>manifest.json</code>,
+           so unrelated JS projects are untouched.</p>
+    ]]></description>
+
+    <change-notes><![CDATA[
+        <h3>1.0.0</h3>
+        <ul>
+          <li>Initial release.</li>
+          <li>JSON Schema auto-binding for Luggage <code>manifest.json</code>.</li>
+          <li>Bundled <code>luggage.d.ts</code> exposing <code>client</code> globals.</li>
+          <li><b>New → Luggage Plugin</b> 4-file scaffold.</li>
+          <li>Live templates for common API patterns.</li>
+        </ul>
+    ]]></change-notes>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>JavaScript</depends>
+    <depends>com.intellij.modules.json</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <fileTemplateGroup implementation="com.luggage.plugindev.LuggageFileTemplateGroupFactory"/>
+        <defaultLiveTemplates file="liveTemplates/Luggage"/>
+        <json.jsonSchemaProviderFactory
+            implementation="com.luggage.plugindev.LuggageManifestSchemaProviderFactory"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="JavaScript">
+        <JavaScriptPredefinedLibraryProvider
+            implementation="com.luggage.plugindev.LuggageJsLibraryProvider"/>
+    </extensions>
+
+    <actions>
+        <action id="Luggage.NewPlugin"
+                class="com.luggage.plugindev.LuggageNewPluginAction"
+                text="Luggage Plugin"
+                description="Scaffold a new Luggage MUD client plugin (manifest + panel + index.js)">
+            <add-to-group group-id="NewGroup" anchor="last"/>
+        </action>
+    </actions>
+</idea-plugin>

@@ -1,0 +1,21 @@
+// ${PLUGIN_NAME}
+// The client object is injected by Luggage; no import needed.
+
+var panel = document.querySelector('.${PLUGIN_ID}-panel[data-plugin="${PLUGIN_ID}"]');
+var input = panel.querySelector(".${PLUGIN_ID}-input");
+var goBtn = panel.querySelector(".${PLUGIN_ID}-go");
+var statusEl = panel.querySelector(".${PLUGIN_ID}-status");
+
+function setStatus(msg, kind) {
+    statusEl.textContent = msg;
+    statusEl.className = "${PLUGIN_ID}-status" + (kind ? " ${PLUGIN_ID}-" + kind : "");
+}
+
+goBtn.addEventListener("click", function () {
+    var value = input.value.trim();
+    if (!value) return setStatus("Enter something first.", "error");
+    client.send(value);
+    setStatus("Sent.", "ok");
+});
+
+setStatus("Ready.");

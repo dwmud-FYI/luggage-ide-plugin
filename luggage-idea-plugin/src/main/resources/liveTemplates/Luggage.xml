@@ -1,0 +1,73 @@
+<templateSet group="Luggage">
+
+    <template name="lsend"
+              value="client.send('$CMD$');$END$"
+              description="Send a command to the MUD"
+              toReformat="true"
+              toShortenFQNames="false">
+        <variable name="CMD" expression="" defaultValue="&quot;look&quot;" alwaysStopAt="true"/>
+        <context>
+            <option name="JAVA_SCRIPT" value="true"/>
+            <option name="TypeScript" value="true"/>
+        </context>
+    </template>
+
+    <template name="lon"
+              value="client.on('$EVENT$', function (ev) {&#10;    $END$&#10;});"
+              description="Subscribe to a Luggage event (line, gmcp, …)"
+              toReformat="true"
+              toShortenFQNames="false">
+        <variable name="EVENT" expression="enum(&quot;line&quot;, &quot;gmcp&quot;)" defaultValue="&quot;line&quot;" alwaysStopAt="true"/>
+        <context>
+            <option name="JAVA_SCRIPT" value="true"/>
+            <option name="TypeScript" value="true"/>
+        </context>
+    </template>
+
+    <template name="ltrigger"
+              value="client.triggers.create({&#10;    pattern: $PATTERN$,&#10;    action: function (text) {&#10;        $END$&#10;    }&#10;});"
+              description="Register a trigger"
+              toReformat="true"
+              toShortenFQNames="false">
+        <variable name="PATTERN" expression="" defaultValue="/^You see/" alwaysStopAt="true"/>
+        <context>
+            <option name="JAVA_SCRIPT" value="true"/>
+            <option name="TypeScript" value="true"/>
+        </context>
+    </template>
+
+    <template name="ltimer"
+              value="client.timers.create({&#10;    interval: $MS$,&#10;    repeat: true,&#10;    action: function () {&#10;        $END$&#10;    }&#10;});"
+              description="Register a timer"
+              toReformat="true"
+              toShortenFQNames="false">
+        <variable name="MS" expression="" defaultValue="1000" alwaysStopAt="true"/>
+        <context>
+            <option name="JAVA_SCRIPT" value="true"/>
+            <option name="TypeScript" value="true"/>
+        </context>
+    </template>
+
+    <template name="lstorage"
+              value="client.storage.get('$KEY$').then(function (val) {&#10;    $END$&#10;});"
+              description="Read a value from plugin storage"
+              toReformat="true"
+              toShortenFQNames="false">
+        <variable name="KEY" expression="" defaultValue="&quot;config&quot;" alwaysStopAt="true"/>
+        <context>
+            <option name="JAVA_SCRIPT" value="true"/>
+            <option name="TypeScript" value="true"/>
+        </context>
+    </template>
+
+    <template name="lcapture"
+              value="// One-shot output capture — gag a command's reply and collect it.&#10;var capture = null;&#10;&#10;client.intercept.incoming(function (ev) {&#10;    if (!capture) return ev;&#10;    var raw = typeof ev === 'string' ? ev : (ev.text || ev.data || '');&#10;    var line = raw.replace(/\x1b\[[0-9;]*m/g, '').replace(/\s+$/, '');&#10;    if (line.trim() === '&gt;' &amp;&amp; capture.lines.length) { finish(); return ev; }&#10;    capture.lines.push(line);&#10;    if (capture.idle) clearTimeout(capture.idle);&#10;    capture.idle = setTimeout(finish, 1200);&#10;    return null;&#10;});&#10;&#10;function finish() {&#10;    if (!capture) return;&#10;    if (capture.idle) clearTimeout(capture.idle);&#10;    if (capture.safety) clearTimeout(capture.safety);&#10;    var resolve = capture.resolve;&#10;    var text = capture.lines.join('\n');&#10;    capture = null;&#10;    resolve(text);&#10;}&#10;&#10;function captureCommand(cmd) {&#10;    return new Promise(function (resolve) {&#10;        capture = { lines: [], resolve: resolve, idle: null, safety: setTimeout(finish, 8000) };&#10;        client.sendSilent(cmd);&#10;    });&#10;}&#10;$END$"
+              description="Capture-state-machine boilerplate for silent command/response"
+              toReformat="false"
+              toShortenFQNames="false">
+        <context>
+            <option name="JAVA_SCRIPT" value="true"/>
+        </context>
+    </template>
+
+</templateSet>

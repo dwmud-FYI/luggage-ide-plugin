@@ -1,0 +1,10 @@
+<div class="${PLUGIN_ID}-panel" data-plugin="${PLUGIN_ID}">
+  <div class="${PLUGIN_ID}-field">
+    <label class="${PLUGIN_ID}-label" for="${PLUGIN_ID}-input">Input</label>
+    <input class="${PLUGIN_ID}-input" id="${PLUGIN_ID}-input" type="text" autocomplete="off" spellcheck="false" />
+  </div>
+
+  <button class="${PLUGIN_ID}-go" type="button">Go</button>
+
+  <div class="${PLUGIN_ID}-status"></div>
+</div>

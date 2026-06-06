@@ -1,0 +1,109 @@
+name: release
+
+on:
+  push:
+    tags: ['v*']
+  release:
+    types: [published]
+
+jobs:
+  idea:
+    name: idea — build + publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: derive version
+        id: ver
+        run: |
+          REF="${GITHUB_REF##*/}"
+          VERSION="${REF#v}"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: set up jdk 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: gradle cache
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: build + verify + publish
+        working-directory: luggage-idea-plugin
+        env:
+          JETBRAINS_MARKETPLACE_TOKEN: ${{ secrets.JETBRAINS_MARKETPLACE_TOKEN }}
+        run: |
+          ./gradlew --no-daemon -PpluginVersion=${{ steps.ver.outputs.version }} \
+            clean buildPlugin verifyPlugin publishPlugin
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: idea-plugin-zip
+          path: luggage-idea-plugin/build/distributions/*.zip
+
+      - name: attach to gh release
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: luggage-idea-plugin/build/distributions/*.zip
+
+  vscode:
+    name: vscode — build + publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: derive version
+        id: ver
+        run: |
+          REF="${GITHUB_REF##*/}"
+          VERSION="${REF#v}"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: set up node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: luggage-vscode-extension/package-lock.json
+
+      - name: install
+        working-directory: luggage-vscode-extension
+        run: npm ci || npm install
+
+      - name: align version
+        working-directory: luggage-vscode-extension
+        run: npm version --no-git-tag-version ${{ steps.ver.outputs.version }}
+
+      - name: sync + build + package
+        working-directory: luggage-vscode-extension
+        run: |
+          npm run sync
+          npm run build
+          npm run package
+
+      - name: publish — vs code marketplace
+        if: env.VSCE_PAT != ''
+        working-directory: luggage-vscode-extension
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        run: npx vsce publish -p "$VSCE_PAT"
+
+      - name: publish — open vsx
+        if: env.OVSX_PAT != ''
+        working-directory: luggage-vscode-extension
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
+        run: npx ovsx publish -p "$OVSX_PAT"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vscode-extension-vsix
+          path: luggage-vscode-extension/*.vsix
+
+      - name: attach to gh release
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: luggage-vscode-extension/*.vsix

@@ -1,0 +1,72 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  idea:
+    name: idea plugin build + verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: set up jdk 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: gradle cache
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: sync shared assets
+        working-directory: luggage-idea-plugin
+        run: |
+          mkdir -p src/main/resources/schemas src/main/resources/types
+          cp ../shared/schema/manifest.schema.json src/main/resources/schemas/
+          cp ../shared/types/luggage.d.ts src/main/resources/types/
+
+      - name: build + verify
+        working-directory: luggage-idea-plugin
+        run: ./gradlew --no-daemon clean buildPlugin verifyPlugin
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: idea-plugin-zip
+          path: luggage-idea-plugin/build/distributions/*.zip
+
+  vscode:
+    name: vscode extension build + package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: set up node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: luggage-vscode-extension/package-lock.json
+
+      - name: install
+        working-directory: luggage-vscode-extension
+        run: npm ci || npm install
+
+      - name: sync shared assets
+        working-directory: luggage-vscode-extension
+        run: npm run sync
+
+      - name: build
+        working-directory: luggage-vscode-extension
+        run: npm run build
+
+      - name: package
+        working-directory: luggage-vscode-extension
+        run: npm run package
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vscode-extension-vsix
+          path: luggage-vscode-extension/*.vsix

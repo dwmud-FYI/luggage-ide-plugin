@@ -1,0 +1,69 @@
+{
+  "name": "luggage-plugin-dev",
+  "displayName": "Luggage Plugin Development",
+  "description": "Zero-config tooling for Luggage MUD client plugin authors — manifest.json validation, client.* autocomplete, scaffolding, snippets.",
+  "version": "1.0.0",
+  "publisher": "luggage",
+  "license": "MIT",
+  "icon": "images/icon.png",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Snippets", "Other", "Programming Languages"],
+  "keywords": ["luggage", "mud", "plugin", "discworld", "muds"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SeanStoves/luggage-ide-plugin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SeanStoves/luggage-ide-plugin/issues"
+  },
+  "homepage": "https://github.com/SeanStoves/luggage-ide-plugin#readme",
+  "main": "./out/extension.js",
+  "activationEvents": ["workspaceContains:**/manifest.json"],
+  "contributes": {
+    "jsonValidation": [
+      {
+        "fileMatch": "manifest.json",
+        "url": "./schemas/manifest.schema.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "javascript",
+        "path": "./snippets/luggage.code-snippets"
+      }
+    ],
+    "commands": [
+      {
+        "command": "luggage.newPlugin",
+        "title": "Luggage: New Plugin"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "luggage.newPlugin",
+          "when": "explorerResourceIsFolder",
+          "group": "navigation@99"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "sync": "node scripts/sync-shared.js",
+    "build": "tsc -p .",
+    "watch": "tsc -p . -w",
+    "vscode:prepublish": "npm run sync && npm run build",
+    "package": "vsce package",
+    "publish:vscode": "vsce publish",
+    "publish:openvsx": "ovsx publish"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^2.24.0",
+    "ovsx": "^0.9.0",
+    "typescript": "^5.4.0"
+  }
+}
