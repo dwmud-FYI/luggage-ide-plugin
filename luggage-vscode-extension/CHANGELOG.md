@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3
+
+- Added the Luggage logo as the extension icon.
+
 ## 1.0.2
 
 - Repository moved to the dwmud-FYI organization. Updated `repository`, `homepage`, and `bugs` links. No functional changes.
