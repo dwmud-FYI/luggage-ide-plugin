@@ -57,8 +57,3 @@ with the same semantic version to:
 - Open VSX (token: `OVSX_PAT`)
 
 Manual local publish flows are documented in each subproject's README.
-
-## Not in this repo
-
-Sample Luggage plugins (`xp-tracker`, `shield-timer`, `dwmud.FYI`, etc.) live in the
-parent workspace — they're reference material, not part of this distributable.
