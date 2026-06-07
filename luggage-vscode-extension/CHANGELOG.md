@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+
+- Repository moved to the dwmud-FYI organization. Updated `repository`, `homepage`, and `bugs` links. No functional changes.
+
 ## 1.0.1
 
 - Renamed displayName from "Luggage Plugin Development" to "Luggage Development" — JetBrains Marketplace rejects names containing the word "plugin", and the VS Code listing now matches for brand consistency. Functionally identical to 1.0.0.
