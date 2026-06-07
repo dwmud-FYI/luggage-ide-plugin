@@ -61,24 +61,17 @@ kotlin {
     jvmToolchain(providers.gradleProperty("javaVersion").get().toInt())
 }
 
-// Copy shared schema + d.ts from the monorepo's shared/ folder into resources before packaging.
-// Keeps single source of truth without check-in duplication.
-val syncSharedAssets = tasks.register<Copy>("syncSharedAssets") {
+// Pull shared schema + d.ts from the monorepo's shared/ folder into a generated
+// resource directory. Hooked into the source set so Gradle wires processResources /
+// patchPluginXml / compileKotlin to depend on it automatically — no implicit-dep
+// warnings, no checked-in copies of the shared assets.
+val syncSharedAssets = tasks.register<Sync>("syncSharedAssets") {
     val sharedDir = rootProject.projectDir.parentFile.resolve("shared")
 
-    from(sharedDir.resolve("schema")) {
-        into("schemas")
-    }
-    from(sharedDir.resolve("types")) {
-        into("types")
-    }
-    into(layout.projectDirectory.dir("src/main/resources"))
+    from(sharedDir.resolve("schema")) { into("schemas") }
+    from(sharedDir.resolve("types"))  { into("types") }
+
+    into(layout.buildDirectory.dir("generated/sharedAssets"))
 }
 
-tasks.named("processResources") {
-    dependsOn(syncSharedAssets)
-}
-
-tasks.named("compileKotlin") {
-    dependsOn(syncSharedAssets)
-}
+sourceSets["main"].resources.srcDir(syncSharedAssets)
