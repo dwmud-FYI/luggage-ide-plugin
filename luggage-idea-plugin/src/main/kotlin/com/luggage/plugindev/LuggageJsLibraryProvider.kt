@@ -18,7 +18,7 @@ import java.security.MessageDigest
  * machinery wants a real VirtualFile on disk — so we extract once into the plugin config dir
  * and hand back that file.
  */
-class LuggageJsLibraryProvider : JSPredefinedLibraryProvider {
+class LuggageJsLibraryProvider : JSPredefinedLibraryProvider() {
 
     private val log = Logger.getInstance(LuggageJsLibraryProvider::class.java)
 
