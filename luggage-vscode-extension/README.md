@@ -1,4 +1,4 @@
-# Luggage Plugin Development
+# Luggage Development
 
 Zero-config tooling for [Luggage](https://luggage.dev) MUD client plugin authors.
 

@@ -1,6 +1,6 @@
 <idea-plugin>
     <id>com.luggage.plugindev</id>
-    <name>Luggage Plugin Development</name>
+    <name>Luggage Development</name>
     <vendor email="sean@seanstoves.com" url="https://dwmud.fyi">dwmud.FYI</vendor>
 
     <description><![CDATA[
@@ -23,6 +23,10 @@
     ]]></description>
 
     <change-notes><![CDATA[
+        <h3>1.0.1</h3>
+        <ul>
+          <li>Renamed from "Luggage Plugin Development" to "Luggage Development" to match the JetBrains Marketplace naming policy. Functionally identical to 1.0.0.</li>
+        </ul>
         <h3>1.0.0</h3>
         <ul>
           <li>Initial release.</li>
