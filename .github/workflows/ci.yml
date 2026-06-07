@@ -10,28 +10,27 @@ jobs:
     name: idea plugin build + verify
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: set up jdk 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 17
 
       - name: gradle cache
-        uses: gradle/actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "8.9"
 
       - name: build
         working-directory: luggage-idea-plugin
         # CI only builds — verifyPlugin downloads multiple IDE distros (multi-GB)
-        # and OOMs the 7GB hosted runner. The release workflow runs verifyPlugin
-        # before publishPlugin so the marketplace upload is still gated on it.
-        # syncSharedAssets is wired into processResources, so no manual copy here.
+        # and OOMs the 7GB hosted runner. syncSharedAssets is wired into
+        # processResources, so no manual copy step needed here.
         run: gradle --no-daemon clean buildPlugin
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: idea-plugin-zip
           path: luggage-idea-plugin/build/distributions/*.zip
@@ -40,10 +39,10 @@ jobs:
     name: vscode extension build + package
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: set up node 20
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 20
           cache: npm
@@ -65,7 +64,7 @@ jobs:
         working-directory: luggage-vscode-extension
         run: npm run package
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: vscode-extension-vsix
           path: luggage-vscode-extension/*.vsix
