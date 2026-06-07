@@ -1,0 +1,11 @@
+# secrets — never commit
+.env
+.env.*
+!.env.example
+
+# editor / OS noise
+.DS_Store
+*.swp
+*~
+.idea/
+*.iml
