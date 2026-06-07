@@ -13,6 +13,7 @@ repositories {
     mavenCentral()
     intellijPlatform {
         defaultRepositories()
+        intellijDependencies()   // hosts javac2 / forms-rt for the instrumentCode task
     }
 }
 
@@ -29,6 +30,7 @@ dependencies {
             }
         )
 
+        instrumentationTools()
         pluginVerifier()
         zipSigner()
         testFramework(TestFrameworkType.Platform)

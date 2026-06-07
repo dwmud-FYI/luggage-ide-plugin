@@ -85,8 +85,14 @@ class LuggageNewPluginAction : AnAction() {
         )
 
         for ((templateName, filename) in files) {
-            val template = mgr.getJ2eeTemplate(templateName)
-                ?: throw IllegalStateException("Template '$templateName' not registered")
+            // getJ2eeTemplate is annotated @NotNull but the runtime contract is "throws if missing",
+            // which the Kotlin null-check warning doesn't reflect. Wrap in a try and surface a clear
+            // message if the template ever goes missing from the jar.
+            val template = try {
+                mgr.getJ2eeTemplate(templateName)
+            } catch (ex: Throwable) {
+                throw IllegalStateException("Template '$templateName' not registered", ex)
+            }
             val text = template.getText(props)
             val file = folder.createChildData(this, filename)
             file.setBinaryContent(text.toByteArray(Charsets.UTF_8))
