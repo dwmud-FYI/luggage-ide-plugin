@@ -23,10 +23,13 @@ jobs:
         with:
           gradle-version: "8.9"
 
-      - name: build + verify
+      - name: build
         working-directory: luggage-idea-plugin
-        # syncSharedAssets is wired into processResources, so we don't need to copy manually here
-        run: gradle --no-daemon clean buildPlugin verifyPlugin
+        # CI only builds — verifyPlugin downloads multiple IDE distros (multi-GB)
+        # and OOMs the 7GB hosted runner. The release workflow runs verifyPlugin
+        # before publishPlugin so the marketplace upload is still gated on it.
+        # syncSharedAssets is wired into processResources, so no manual copy here.
+        run: gradle --no-daemon clean buildPlugin
 
       - uses: actions/upload-artifact@v4
         with:
