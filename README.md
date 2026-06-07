@@ -7,7 +7,7 @@ two installable extensions, one shared source of truth for schema + typings.
 
 ```
 shared/                      — manifest.schema.json + luggage.d.ts (source of truth)
-luggage-idea-plugin/         — JetBrains IDE plugin (IntelliJ, WebStorm, PyCharm Pro, …)
+luggage-idea-plugin/         — JetBrains plugin (IDEA Ultimate, WebStorm, PhpStorm, PyCharm Pro, …)
 luggage-vscode-extension/    — VS Code / VSCodium / Cursor extension
 .github/workflows/           — CI + tag-driven release pipelines
 ```

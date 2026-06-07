@@ -14,6 +14,9 @@
         </ul>
         <p>Detection is shape-based — the plugin activates only inside folders that contain a Luggage <code>manifest.json</code>,
            so unrelated JS projects are untouched.</p>
+        <p><b>Requires</b> the bundled JavaScript plugin (IntelliJ IDEA Ultimate, WebStorm, PhpStorm,
+           PyCharm Pro, RubyMine, GoLand, Rider, RustRover, DataGrip). IDEA Community is not
+           supported because it doesn't bundle the JavaScript plugin.</p>
     ]]></description>
 
     <change-notes><![CDATA[

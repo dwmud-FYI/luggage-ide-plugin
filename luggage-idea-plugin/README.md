@@ -1,7 +1,9 @@
 # luggage-idea-plugin
 
-JetBrains-platform plugin (IntelliJ IDEA, WebStorm, PhpStorm, PyCharm Pro, …) for Luggage
-MUD plugin authors. Zero-config validation, autocomplete, scaffolding.
+JetBrains-platform plugin for Luggage MUD plugin authors. Zero-config validation,
+autocomplete, scaffolding. Targets IntelliJ Platform 2024.2+ — IDEA Ultimate, WebStorm,
+PhpStorm, PyCharm Pro, RubyMine, GoLand, Rider, RustRover, DataGrip. Requires the
+bundled JavaScript plugin, so **IDEA Community is not supported**.
 
 ## Develop
 
