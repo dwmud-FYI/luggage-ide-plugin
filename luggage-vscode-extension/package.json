@@ -3,7 +3,7 @@
   "displayName": "Luggage Plugin Development",
   "description": "Zero-config tooling for Luggage MUD client plugin authors — manifest.json validation, client.* autocomplete, scaffolding, snippets.",
   "version": "1.0.0",
-  "publisher": "luggage",
+  "publisher": "dwmud-fyi",
   "license": "MIT",
   "icon": "images/icon.png",
   "engines": {

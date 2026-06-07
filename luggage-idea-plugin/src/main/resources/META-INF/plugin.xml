@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.luggage.plugindev</id>
     <name>Luggage Plugin Development</name>
-    <vendor email="sean@luggage.dev" url="https://luggage.dev">Luggage</vendor>
+    <vendor email="sean@seanstoves.com" url="https://dwmud.fyi">dwmud.FYI</vendor>
 
     <description><![CDATA[
         <p>Zero-config developer tooling for <a href="https://luggage.dev">Luggage</a> MUD client plugin authors.</p>
