@@ -14,9 +14,12 @@
         </ul>
         <p>Detection is shape-based — the plugin activates only inside folders that contain a Luggage <code>manifest.json</code>,
            so unrelated JS projects are untouched.</p>
-        <p><b>Requires</b> the bundled JavaScript plugin (IntelliJ IDEA Ultimate, WebStorm, PhpStorm,
-           PyCharm Pro, RubyMine, GoLand, Rider, RustRover, DataGrip). IDEA Community is not
-           supported because it doesn't bundle the JavaScript plugin.</p>
+        <p><b>IDE support.</b> Schema validation, the scaffolder, and file templates work everywhere —
+           IntelliJ IDEA (Community + Ultimate), WebStorm, PhpStorm, PyCharm (Community + Pro),
+           RubyMine, GoLand, Rider, RustRover, DataGrip. The <code>client.*</code> autocomplete inside
+           <code>index.js</code> needs the bundled JavaScript plugin, so it lights up on Ultimate /
+           WebStorm / PhpStorm / PyCharm Pro / RubyMine / GoLand / Rider / RustRover / DataGrip but is
+           skipped on Community editions.</p>
     ]]></description>
 
     <change-notes><![CDATA[
@@ -31,19 +34,17 @@
     ]]></change-notes>
 
     <depends>com.intellij.modules.platform</depends>
-    <depends>JavaScript</depends>
-    <depends>com.intellij.modules.json</depends>
+    <!-- JavaScript is optional: lights up client.* autocomplete on IDEs that bundle it (IDEA
+         Ultimate, WebStorm, PhpStorm, PyCharm Pro, …). On IDEA Community the JS-specific
+         extensions in luggage-js.xml are skipped; everything else (schema validation,
+         scaffolder, file templates) still works. -->
+    <depends optional="true" config-file="luggage-js.xml">JavaScript</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <fileTemplateGroup implementation="com.luggage.plugindev.LuggageFileTemplateGroupFactory"/>
         <defaultLiveTemplates file="liveTemplates/Luggage"/>
         <json.jsonSchemaProviderFactory
             implementation="com.luggage.plugindev.LuggageManifestSchemaProviderFactory"/>
-    </extensions>
-
-    <extensions defaultExtensionNs="JavaScript">
-        <JavaScriptPredefinedLibraryProvider
-            implementation="com.luggage.plugindev.LuggageJsLibraryProvider"/>
     </extensions>
 
     <actions>

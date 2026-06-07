@@ -1,0 +1,12 @@
+<idea-plugin>
+    <!--
+      Extensions that need the bundled JavaScript plugin. Wired in from the main
+      plugin.xml via <depends optional="true" config-file="luggage-js.xml">.
+      On JS-less IDEs (IDEA Community) this whole file is skipped and the
+      LuggageJsLibraryProvider class is never loaded.
+    -->
+    <extensions defaultExtensionNs="JavaScript">
+        <JavaScriptPredefinedLibraryProvider
+            implementation="com.luggage.plugindev.LuggageJsLibraryProvider"/>
+    </extensions>
+</idea-plugin>

@@ -1,9 +1,14 @@
 # luggage-idea-plugin
 
 JetBrains-platform plugin for Luggage MUD plugin authors. Zero-config validation,
-autocomplete, scaffolding. Targets IntelliJ Platform 2024.2+ — IDEA Ultimate, WebStorm,
-PhpStorm, PyCharm Pro, RubyMine, GoLand, Rider, RustRover, DataGrip. Requires the
-bundled JavaScript plugin, so **IDEA Community is not supported**.
+autocomplete, scaffolding. Targets IntelliJ Platform 2024.2+.
+
+**Installs everywhere** — IDEA Community + Ultimate, WebStorm, PhpStorm, PyCharm
+Community + Pro, RubyMine, GoLand, Rider, RustRover, DataGrip. Schema validation,
+the New → Luggage Plugin scaffolder, and the file/live templates work on every
+target. `client.*` autocomplete needs the bundled JavaScript plugin, so it lights
+up on Ultimate / WebStorm / PhpStorm / PyCharm Pro / RubyMine / GoLand / Rider /
+RustRover / DataGrip but is skipped on Community editions.
 
 ## Develop
 
