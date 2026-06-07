@@ -20,17 +20,13 @@ jobs:
 
       - name: gradle cache
         uses: gradle/actions/setup-gradle@v3
-
-      - name: sync shared assets
-        working-directory: luggage-idea-plugin
-        run: |
-          mkdir -p src/main/resources/schemas src/main/resources/types
-          cp ../shared/schema/manifest.schema.json src/main/resources/schemas/
-          cp ../shared/types/luggage.d.ts src/main/resources/types/
+        with:
+          gradle-version: "8.9"
 
       - name: build + verify
         working-directory: luggage-idea-plugin
-        run: ./gradlew --no-daemon clean buildPlugin verifyPlugin
+        # syncSharedAssets is wired into processResources, so we don't need to copy manually here
+        run: gradle --no-daemon clean buildPlugin verifyPlugin
 
       - uses: actions/upload-artifact@v4
         with:

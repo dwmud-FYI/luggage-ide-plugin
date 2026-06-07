@@ -28,13 +28,15 @@ jobs:
 
       - name: gradle cache
         uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: "8.9"
 
       - name: build + verify + publish
         working-directory: luggage-idea-plugin
         env:
           JETBRAINS_MARKETPLACE_TOKEN: ${{ secrets.JETBRAINS_MARKETPLACE_TOKEN }}
         run: |
-          ./gradlew --no-daemon -PpluginVersion=${{ steps.ver.outputs.version }} \
+          gradle --no-daemon -PpluginVersion=${{ steps.ver.outputs.version }} \
             clean buildPlugin verifyPlugin publishPlugin
 
       - uses: actions/upload-artifact@v4
