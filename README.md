@@ -1,5 +1,17 @@
 # luggage-ide-plugin
 
+[![CI](https://github.com/dwmud-FYI/luggage-ide-plugin/actions/workflows/ci.yml/badge.svg)](https://github.com/dwmud-FYI/luggage-ide-plugin/actions/workflows/ci.yml)
+[![Release](https://github.com/dwmud-FYI/luggage-ide-plugin/actions/workflows/release.yml/badge.svg)](https://github.com/dwmud-FYI/luggage-ide-plugin/actions/workflows/release.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](luggage-vscode-extension/LICENSE)
+[![Stars](https://img.shields.io/github/stars/dwmud-FYI/luggage-ide-plugin?logo=github)](https://github.com/dwmud-FYI/luggage-ide-plugin/stargazers)
+
+[![VS Code](https://img.shields.io/visual-studio-marketplace/v/dwmud-fyi.luggage-plugin-dev?label=VS%20Code&logo=visualstudiocode)](https://marketplace.visualstudio.com/items?itemName=dwmud-fyi.luggage-plugin-dev)
+[![VS Code installs](https://img.shields.io/visual-studio-marketplace/i/dwmud-fyi.luggage-plugin-dev?label=installs)](https://marketplace.visualstudio.com/items?itemName=dwmud-fyi.luggage-plugin-dev)
+[![Open VSX](https://img.shields.io/open-vsx/v/dwmud-fyi/luggage-plugin-dev?label=Open%20VSX)](https://open-vsx.org/extension/dwmud-fyi/luggage-plugin-dev)
+[![Open VSX downloads](https://img.shields.io/open-vsx/dt/dwmud-fyi/luggage-plugin-dev?label=downloads)](https://open-vsx.org/extension/dwmud-fyi/luggage-plugin-dev)
+[![JetBrains](https://img.shields.io/jetbrains/plugin/v/32147?label=JetBrains)](https://plugins.jetbrains.com/plugin/32147-luggage-development)
+[![JetBrains downloads](https://img.shields.io/jetbrains/plugin/d/32147?label=downloads)](https://plugins.jetbrains.com/plugin/32147-luggage-development)
+
 Editor extensions for [Luggage](https://luggage.dev) MUD client plugin authors. One monorepo,
 two installable extensions, one shared source of truth for schema + typings.
 
